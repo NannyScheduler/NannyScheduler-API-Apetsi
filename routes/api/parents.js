@@ -45,7 +45,7 @@ router.get('/:id', (req, res) => {
 // @route    POST   api/parents/register
 // @desc     Register a parent
 // @access   Public
-router.post('/register', middleware.verifyUserCred, (req, res) => {
+router.post('/register', [middleware.verifyUserCred, middleware.checkIfUserAlreadyExists], (req, res) => {
   const newUser = { email: req.body.email, password: req.body.password, username: req.body.username }
   const hash = bcrypt.hashSync(newUser.password, 10)
   newUser.password = hash

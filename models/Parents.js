@@ -1,12 +1,18 @@
 const db = require('../data/db-config')
+
 module.exports = {
   find,
   save,
-  findById
+  findById,
+  remove
 }
 
 function find () {
   return db('parents')
+}
+
+function update (id, parent) {
+    return db('parents').where('parent_id', Number(id)).update(parent)
 }
 
 function save (parent) {
@@ -15,4 +21,8 @@ function save (parent) {
 
 function findById (id) {
   return db('parents').where({ parent_id: Number(id) }).first()
+}
+
+function remove (id) {
+    return db('parents').where({parent_id: Number(id)}).del()
 }
