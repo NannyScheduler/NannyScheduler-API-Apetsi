@@ -4,6 +4,8 @@ module.exports = {
   find,
   save,
   findById,
+  update,
+  findByEmail,
   remove
 }
 
@@ -25,4 +27,8 @@ function findById (id) {
 
 function remove (id) {
     return db('parents').where({parent_id: Number(id)}).del()
+}
+
+function findByEmail (email) {
+    return db('parents').where({email}).first()
 }

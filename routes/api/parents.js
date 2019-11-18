@@ -58,4 +58,16 @@ router.post('/register', [middleware.verifyUserCred, middleware.checkIfUserAlrea
     })
 })
 
+// @route    POST   api/parents/login
+// @desc     Login parent
+// @access   Public
+router.post('/login', (req, res) => {
+    const userCred = {email: req.body.email, password: req.body.password}
+    Parents.findByEmail(userCred.email).then(parent => {
+        res.send(parent)
+    }).catch(err => {
+        res.status(500).json(err)
+    })
+})
+
 module.exports = router
