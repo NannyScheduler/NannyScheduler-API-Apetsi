@@ -42,4 +42,11 @@ router.post('/register', [middleware.verifyUserCred], (req, res) => {
       })
 })
 
+// @route    POST   api/nannies/:id/addprofile
+// @desc     Create a nanny profile
+// @access   Public
+router.post('/:id/addprofile', (req, res) => {
+
+})
+
 module.exports = router
