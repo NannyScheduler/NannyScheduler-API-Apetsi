@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs')
+const middleware = require('../../middlewares/index')
 
 const Nannies = require('../../models/Nannies')
 
@@ -22,6 +24,22 @@ router.get('/', (req, res) => {
     }).catch(err => {
         res.status(500).json({message: `Unable to retrieve nannies from the database. ${err.message}`})
     })
+})
+
+// @route    POST   api/nannies/register
+// @desc     Register a nanny
+// @access   Public
+router.post('/register', [middleware.verifyUserCred], (req, res) => {
+    const newUser = { email: req.body.email, password: req.body.password, username: req.body.username }
+    const hash = bcrypt.hashSync(newUser.password, 10)
+    newUser.password = hash
+    Nannies.save(newUser)
+      .then(nanny => {
+        res.status(201).json({ message: 'Nanny saved successfully' })
+      })
+      .catch(err => {
+        res.status(500).json({ message: `Unable to save nanny to database. ${err.message}` })
+      })
 })
 
 module.exports = router
