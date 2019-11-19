@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcryptjs')
 const middleware = require('../../middlewares/index.js')
+const jwt = require('jsonwebtoken')
 
 const Parents = require('../../models/Parents')
 
@@ -64,7 +65,11 @@ router.post('/register', [middleware.verifyUserCred, middleware.checkIfUserAlrea
 router.post('/login', (req, res) => {
     const userCred = {email: req.body.email, password: req.body.password}
     Parents.findByEmail(userCred.email).then(parent => {
-        res.send(parent)
+        if (parent && bcrypt.compareSync(userCred.password, parent.password)) {
+            res.json({message: 'Login success'})
+        } else {
+            res.status(400).json({message: 'Invalid credentials'})
+        }
     }).catch(err => {
         res.status(500).json(err)
     })

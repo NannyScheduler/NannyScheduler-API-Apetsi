@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 
-const parents = require('./routes/api/parents')
+// const parents = require('./routes/api/parents')
 
 const app = express()
 
@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cors())
 
 // routes middleware
-app.use('/api/parents', parents)
+// app.use('/api/parents', parents)
 
 app.get('/', (req, res) => {
     res.status(200).json({message: 'Welcome to Nanny Scheduler'})
