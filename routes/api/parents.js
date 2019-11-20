@@ -35,7 +35,7 @@ router.get('/:id', (req, res) => {
   Parents.findById(req.params.id)
     .then(parent => {
       if (!parent) {
-        return res.status(404).json({ message: 'Parent not found' })
+        return res.status(404).json({ message: 'Parent not found with the given id' })
       }
       res.status(200).json(parent)
     })
