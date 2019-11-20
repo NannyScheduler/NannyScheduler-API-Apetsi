@@ -3,7 +3,7 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const middleware = require('../../middlewares/index.js')
 const jwt = require('jsonwebtoken')
-const config = require('../../config/config')
+const keys = require('../../config/keys')
 
 const Parents = require('../../models/Parents')
 
@@ -90,7 +90,7 @@ function generateToken(user) {
     expiresIn: '1d'
   }
 
-  return jwt.sign(payload, config.jwtSecret, options)
+  return jwt.sign(payload, keys.JWT_SECRET, options)
 }
 
 module.exports = router
