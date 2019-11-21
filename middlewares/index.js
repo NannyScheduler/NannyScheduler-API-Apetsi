@@ -1,6 +1,6 @@
 // import parent model
 const Parent = require('../models/Parents')
-module.exports = { verifyUserCred, checkIfUserAlreadyExists }
+module.exports = { verifyUserCred, checkIfUserAlreadyExists, isAuthenticated }
 
 function verifyUserCred (req, res, next) {
   const { email, password, username } = req.body
@@ -18,5 +18,9 @@ async function checkIfUserAlreadyExists (req, res, next) {
   if (parentAlreadyExist.length > 0) {
     return res.status(400).json({ message: 'A given parent with the username or email already exists' })
   }
+  next()
+}
+
+function isAuthenticated (req, res, next) {
   next()
 }
