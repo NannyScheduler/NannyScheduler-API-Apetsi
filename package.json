@@ -7,7 +7,7 @@
     "start": "node server.js",
     "server": "nodemon server.js",
     "lint:fix": "standard --fix",
-    "test": "standard --fix && cross-env NODE_ENV=testing jest --watchAll"
+    "test": "standard --fix && cross-env NODE_ENV=testing jest --watchAll --coverage"
   },
   "repository": {
     "type": "git",

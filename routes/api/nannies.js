@@ -26,6 +26,17 @@ router.get('/', (req, res) => {
   })
 })
 
+router.get('/:id', (req, res) => {
+  Nannies.findById(req.params.id).then(nanny => {
+    if (!nanny) {
+      return res.status(404).json({ message: 'No nanny with the given id was found' })
+    }
+    res.status(200).json(nanny)
+  }).catch(err => {
+    res.status(500).json({ message: `Unable to retrieve the given user. ${err.message}` })
+  })
+})
+
 // @route    POST   api/nannies/register
 // @desc     Register a nanny
 // @access   Public
@@ -47,6 +58,23 @@ router.post('/register', [middleware.verifyUserCred], (req, res) => {
 // @access   Public
 router.post('/:id/addprofile', (req, res) => {
 
+})
+
+// @route    DELETE   api/nannies/:id
+// @desc     Delete a nanny from the db
+// @access   Public
+router.delete('/:id', (req, res) => {
+  Nannies.findById(req.params.id).then(nanny => {
+    if (nanny) {
+      Nannies.remove(req.params.id).then(nanny => {
+        res.status(200).json({ message: 'Nanny deleted successfully' })
+      }).catch(err => {
+        res.status(500).json({ message: `Unable to delete nanny. ${err.message}` })
+      })
+    } else {
+      res.status(404).json({ message: 'Nanny with the given id was not found' })
+    }
+  })
 })
 
 module.exports = router

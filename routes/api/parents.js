@@ -93,4 +93,21 @@ function generateToken (user) {
   return jwt.sign(payload, keys.JWT_SECRET, options)
 }
 
+// @route    DELETE   api/parents/:id
+// @desc     Delete a nanny from the db
+// @access   Public
+router.delete('/:id', (req, res) => {
+  Parents.findById(req.params.id).then(parent => {
+    if (parent) {
+      Parents.remove(req.params.id).then(parent => {
+        res.status(200).json({ message: 'Parent deleted successfully' })
+      }).catch(err => {
+        res.status(500).json({ message: `Unable to delete parent. ${err.message}` })
+      })
+    } else {
+      res.status(404).json({ message: 'Parent with the given id was not found' })
+    }
+  })
+})
+
 module.exports = router

@@ -18,7 +18,7 @@ function update (id, parent) {
 }
 
 function save (parent) {
-  return db('parents').insert(parent).then(ids => ids[0])
+  return db('parents').insert(parent).then(ids => findById(ids[0]))
 }
 
 function findById (id) {

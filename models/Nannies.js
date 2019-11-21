@@ -14,19 +14,19 @@ function find () {
 }
 
 function update (id, parent) {
-  return db('nannies').where('parent_id', Number(id)).update(parent)
+  return db('nannies').where('nanny_id', Number(id)).update(parent)
 }
 
-function save (parent) {
-  return db('nannies').insert(parent).then(ids => ids[0])
+function save (nanny) {
+  return db('nannies').insert(nanny).then(ids => findById(ids[0]))
 }
 
 function findById (id) {
-  return db('nannies').where({ parent_id: Number(id) }).first()
+  return db('nannies').where({ nanny_id: Number(id) }).first()
 }
 
 function remove (id) {
-  return db('nannies').where({ parent_id: Number(id) }).del()
+  return db('nannies').where({ nanny_id: Number(id) }).del()
 }
 
 function findByEmail (email) {
