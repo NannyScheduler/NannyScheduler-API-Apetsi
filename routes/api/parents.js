@@ -64,23 +64,23 @@ router.post('/register', [middleware.verifyUserCred, middleware.checkIfUserAlrea
 // @desc     Login parent
 // @access   Public
 router.post('/login', (req, res) => {
-    const userCred = {email: req.body.email, password: req.body.password}
-    Parents.findByEmail(userCred.email).then(parent => {
-        if (parent && bcrypt.compareSync(userCred.password, parent.password)) {
-            const token = generateToken(parent)
-            res.status(200).json({
-              message: `Welcome ${parent.username}`,
-              token
-            })
-        } else {
-            res.status(400).json({message: 'Invalid credentials'})
-        }
-    }).catch(err => {
-        res.status(500).json(err)
-    })
+  const userCred = { email: req.body.email, password: req.body.password }
+  Parents.findByEmail(userCred.email).then(parent => {
+    if (parent && bcrypt.compareSync(userCred.password, parent.password)) {
+      const token = generateToken(parent)
+      res.status(200).json({
+        message: `Welcome ${parent.username}`,
+        token
+      })
+    } else {
+      res.status(400).json({ message: 'Invalid credentials' })
+    }
+  }).catch(err => {
+    res.status(500).json(err)
+  })
 })
 
-function generateToken(user) {
+function generateToken (user) {
   const payload = {
     subject: user.id,
     username: user.username

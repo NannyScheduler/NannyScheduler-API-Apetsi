@@ -2,12 +2,12 @@
   "name": "NannyScheduler-API-Apetsi",
   "version": "1.0.0",
   "description": "NannyScheduler-Backend-API-Apetsi",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js",
-    "server": "nodemon index.js",
+    "start": "node server.js",
+    "server": "nodemon server.js",
     "lint:fix": "standard --fix",
-    "test": "jest --watchAll"
+    "test": "standard --fix && cross-env NODE_ENV=testing jest --watchAll"
   },
   "repository": {
     "type": "git",
@@ -36,5 +36,8 @@
     "nodemon": "^1.19.4",
     "standard": "^14.3.1",
     "supertest": "^4.0.2"
+  },
+  "standard": {
+    "env": ["jest"]
   }
 }

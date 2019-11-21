@@ -19,9 +19,7 @@ app.use('/api/parents', parents)
 app.use('/api/nannies', nannies)
 
 app.get('/', (req, res) => {
-    res.status(200).json({message: 'Welcome to Nanny Scheduler'})
+  res.status(200).json({ message: 'Welcome to Nanny Scheduler' })
 })
 
-const port = process.env.PORT
-
-app.listen(port, () => console.log(`Server is running on port ${port}`))
+module.exports = app

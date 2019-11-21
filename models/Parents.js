@@ -14,7 +14,7 @@ function find () {
 }
 
 function update (id, parent) {
-    return db('parents').where('parent_id', Number(id)).update(parent)
+  return db('parents').where('parent_id', Number(id)).update(parent)
 }
 
 function save (parent) {
@@ -26,9 +26,9 @@ function findById (id) {
 }
 
 function remove (id) {
-    return db('parents').where({parent_id: Number(id)}).del()
+  return db('parents').where({ parent_id: Number(id) }).del()
 }
 
 function findByEmail (email) {
-    return db('parents').where({email}).first()
+  return db('parents').where({ email }).first()
 }
