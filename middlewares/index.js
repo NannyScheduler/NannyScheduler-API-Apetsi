@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken')
+
 // import parent model
 const Parent = require('../models/Parents')
 module.exports = { verifyUserCred, checkIfUserAlreadyExists, isAuthenticated }
@@ -22,5 +24,18 @@ async function checkIfUserAlreadyExists (req, res, next) {
 }
 
 function isAuthenticated (req, res, next) {
-  next()
-}
+  const token = req.headers.authorization
+  console.log(token)
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+      if (err) {
+        res.status(401).json(err)
+      } else {
+        req.decodedToken = decodedToken
+        next()
+      }
+    })
+  } else {
+    res.status(400).json({ message: 'No credentials provided' })
+  }
+};

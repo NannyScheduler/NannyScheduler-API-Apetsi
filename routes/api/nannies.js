@@ -1,7 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 const middleware = require('../../middlewares/index')
+const keys = require('../../config/keys')
 
 const Nannies = require('../../models/Nannies')
 
@@ -15,7 +17,7 @@ router.get('/test', (req, res) => {
 // @route    GET   api/nannies/
 // @desc     Get all nannies
 // @access   Public
-router.get('/', (req, res) => {
+router.get('/', middleware.isAuthenticated, (req, res) => {
   Nannies.find().then(nannies => {
     if (nannies.length === 0) {
       return res.status(404).json({ message: 'No nannies were found' })
@@ -52,6 +54,39 @@ router.post('/register', [middleware.verifyUserCred], (req, res) => {
       res.status(500).json({ message: `Unable to save nanny to database. ${err.message}` })
     })
 })
+
+// @route    POST   api/nannies/login
+// @desc     Login a nanny
+// @access   Public
+router.post('/login', (req, res) => {
+  const userCred = { email: req.body.email, password: req.body.password }
+  Nannies.findByEmail(userCred.email).then(nanny => {
+    if (nanny && bcrypt.compareSync(userCred.password, nanny.password)) {
+      const token = generateToken(nanny)
+      res.status(200).json({
+        message: `Welcome ${nanny.username}`,
+        token
+      })
+    } else {
+      res.status(400).json({ message: 'Invalid credentials' })
+    }
+  }).catch(err => {
+    res.status(500).json(err)
+  })
+})
+
+function generateToken (user) {
+  const payload = {
+    subject: user.id,
+    username: user.username
+  }
+
+  const options = {
+    expiresIn: '1d'
+  }
+
+  return jwt.sign(payload, keys.JWT_SECRET, options)
+}
 
 // @route    POST   api/nannies/:id/addprofile
 // @desc     Create a nanny profile
