@@ -1,0 +1,43 @@
+{
+  "name": "NannyScheduler-API-Apetsi",
+  "version": "1.0.0",
+  "description": "NannyScheduler-Backend-API-Apetsi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "lint:fix": "standard --fix",
+    "test": "standard --fix && cross-env NODE_ENV=testing jest --watchAll --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NannyScheduler/NannyScheduler-API-Apetsi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NannyScheduler/NannyScheduler-API-Apetsi/issues"
+  },
+  "homepage": "https://github.com/NannyScheduler/NannyScheduler-API-Apetsi#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.20.2",
+    "pg": "^7.12.1",
+    "sqlite3": "^4.1.0"
+  },
+  "devDependencies": {
+    "cross-env": "^6.0.3",
+    "jest": "^24.9.0",
+    "nodemon": "^1.19.4",
+    "standard": "^14.3.1",
+    "supertest": "^4.0.2"
+  },
+  "standard": {
+    "env": ["jest"]
+  }
+}
